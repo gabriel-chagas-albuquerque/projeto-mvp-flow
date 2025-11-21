@@ -2,74 +2,98 @@
 
 # React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Sistema de cardápio digital para lanchonetes com delivery.
 
-Currently, two official plugins are available:
+## Funcionalidades
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Para Administradores de Loja:
+- Dashboard com KPIs de vendas
+- Gerenciamento completo do cardápio (categorias e produtos)
+- Gestão de pedidos com atualização de status
+- Visualização e gerenciamento de clientes
+- Configuração de raio de entrega com preços
+- Envio de mensagens para clientes
+- Configurações da loja (nome, logo, contatos)
 
-## React Compiler
+### Para Clientes:
+- Acesso ao cardápio público da loja via link único
+- Carrinho de compras persistente
+- Histórico de pedidos
+- Perfil com informações pessoais
+- Comunicação direta com a loja via WhatsApp
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tecnologias
 
-## Expanding the ESLint configuration
+- **Frontend**: React + TypeScript + Vite
+- **UI Components**: shadcn/ui
+- **Backend**: Supabase (PostgreSQL + Auth + Real-time)
+- **Roteamento**: React Router
+- **Estado**: React Query
+- **Estilização**: Tailwind CSS
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Configuração
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+1. Clone o repositório
+2. Instale as dependências:
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+3. Configure as variáveis de ambiente:
+```bash
+cp .env.example .env
 ```
+
+Edite o arquivo `.env` com suas credenciais do Supabase:
+```
+VITE_SUPABASE_URL=sua_url_do_supabase
+VITE_SUPABASE_ANON_KEY=sua_chave_anonima
+```
+
+4. Execute o projeto:
+```bash
+npm run dev
+```
+
+## Estrutura do Banco de Dados
+
+O banco de dados foi criado no Supabase com as seguintes tabelas:
+- `stores` - Lojas
+- `users` - Usuários (admins e clientes)
+- `categories` - Categorias de produtos
+- `products` - Produtos do cardápio
+- `delivery_radius` - Raio de entrega
+- `carts` - Carrinhos de compras
+- `cart_items` - Itens do carrinho
+- `orders` - Pedidos
+- `order_items` - Itens dos pedidos
+- `messages` - Mensagens do admin para clientes
+
+## Rotas
+
+### Públicas:
+- `/store/:slug` - Cardápio público da loja
+- `/login` - Login
+- `/register` - Cadastro
+
+### Admin:
+- `/admin/dashboard` - Dashboard com KPIs
+- `/admin/menu` - Gerenciar cardápio
+- `/admin/orders` - Gerenciar pedidos
+- `/admin/customers` - Gerenciar clientes
+- `/admin/delivery` - Configurar entrega
+- `/admin/messages` - Mensagens enviadas
+- `/admin/settings` - Configurações da loja
+
+### Cliente:
+- `/profile` - Perfil e carrinho
+- `/orders` - Histórico de pedidos
+
+## Próximos Passos
+
+- [ ] Integração com gateway de pagamento
+- [ ] Sistema de notificações em tempo real
+- [ ] Cálculo automático de distância para entrega
+- [ ] Upload de imagens para produtos e logos
+- [ ] Sistema de avaliações e comentários
+- [ ] Relatórios avançados
